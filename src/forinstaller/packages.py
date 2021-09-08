@@ -22,9 +22,11 @@ def is_module_installed(module_name: str) -> bool:
     return module_installed
 
 
-def ensure_package(package_name: str, creds_cache_name: Optional[str] = 'default'):
-    is_installed = is_module_installed(package_name)
-    if not is_installed:
+def ensure_package(package_name: str,
+                   creds_cache_name: Optional[str] = 'default',
+                   force_reinstall: bool = False):
+    should_install = force_reinstall or (not is_module_installed(package_name))
+    if should_install:
         if package_name not in dict_package_short_url:
             raise ValueError(f'No package URL provided for {package_name}')
 
