@@ -7,6 +7,7 @@ dict_package_short_url = {
     'forfeatures': 'github.com/forcat2/forfeatures.git',
     'forcommon': 'github.com/forcat2/forcommon.git',
     'fornotebooks': 'github.com/forcat2/notebooks.git',
+    'fortrader': 'github.com/forcat2/fortrader.git',
 }
 
 dict_creds_cache_username = dict()
