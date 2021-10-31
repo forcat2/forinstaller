@@ -10,8 +10,7 @@ dict_package_short_url = {
     'fortrader': 'github.com/forcat2/fortrader.git',
 }
 
-dict_creds_cache_username = dict()
-dict_creds_cache_password = dict()
+dict_creds_cache_oauth_token = dict()
 
 
 def is_module_installed(module_name: str) -> bool:
@@ -31,20 +30,15 @@ def ensure_package(package_name: str,
         if package_name not in dict_package_short_url:
             raise ValueError(f'No package URL provided for {package_name}')
 
-        username = None
-        password = None
+        oauth_token = None
         if creds_cache_name is not None:
-            username = dict_creds_cache_username.get(creds_cache_name, None)
-            password = dict_creds_cache_password.get(creds_cache_name, None)
-        if username is None:
-            username = input('Enter username: ')
-        if password is None:
-            password = getpass(prompt='Enter password or access token: ')
+            oauth_token = dict_creds_cache_oauth_token.get(creds_cache_name, None)
+        if oauth_token is None:
+            oauth_token = getpass(prompt='Enter access token: ')
 
         if creds_cache_name is not None:
-            dict_creds_cache_username[creds_cache_name] = username
-            dict_creds_cache_password[creds_cache_name] = password
+            dict_creds_cache_oauth_token[creds_cache_name] = oauth_token
 
         package_short_url = dict_package_short_url[package_name]
-        package_full_url = f"git+https://'{username}':'{password}'@{package_short_url}"
+        package_full_url = f"git+https://{oauth_token}@{package_short_url}"
         subprocess.call(f"pip install {package_full_url}", shell=True)
