@@ -27,6 +27,8 @@ def ensure_package(package_name: str,
                    force_reinstall: bool = False):
     should_install = force_reinstall or (not is_module_installed(package_name))
     if should_install:
+        print(f'Installing {package_name}')
+
         if package_name not in dict_package_short_url:
             raise ValueError(f'No package URL provided for {package_name}')
 
